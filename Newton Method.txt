@@ -1,0 +1,125 @@
+#include<iostream>
+#include<cmath>
+#include<math.h>
+
+using namespace std;
+
+void c_equation(int choose, double x);
+void Processes(double x, double fx1, double fdx1, int choose);
+
+void main()
+{
+	int choose,choose2;
+	double x;
+	system("color A");
+	cout << "                                                             " << endl;
+	cout << "=============================================================" << endl;
+	cout << "Choose Equation : " << endl;
+	cout << "_____________________________________" << endl;
+	cout << "1- x-2sin(x)" << endl;
+	cout << "2- x^2 + 10 cos(x)" << endl;
+	cout << "3- e^x - 3x^2" << endl;
+	cout << "                                                    " << endl;
+	cin >> choose;
+	cout << "If you have values  press 1/ random press 2 :" << endl;
+	cin >> choose2;
+	if (choose2 == 1)
+	{
+		cout << "                                         " << endl;
+		cout << "Enter Xo : " << endl;
+		cin >> x;
+		c_equation(choose, x);
+	}
+	else if (choose2 == 2)
+	{
+		x = rand() % 20;
+		cout << "Xo = " << x << endl;
+		c_equation(choose, x);
+		choose2 = NULL;
+	}
+	else
+	{
+		cout << "Worng Choice !! " << endl;
+		choose = NULL;
+		choose2 = NULL;
+		main();
+	}
+}
+
+void c_equation(int choose, double x)
+{
+	double fx;
+	double fdx;
+	double fddx;
+	double result;
+	if (choose == 1)
+	{
+		fx = x - 2 * sin(x);
+		fdx = 1 - 2 * cos(x);
+		fddx = 2 * sin(x);
+		result = abs((fx * fddx) / pow(fdx, 2));
+	}
+
+	else if (choose == 2)
+	{
+
+		fx = pow(x, 2) + 10 * cos(x);
+		fdx = 2 * x - 10 * sin(x);
+		fddx = 2 - 10 * cos(x);
+		result = abs((fx * fddx) / pow(fdx, 2));
+	}
+
+	else if (choose == 3)
+	{
+		fx = exp(x) - 3 * pow(x, 2);
+		fdx = exp(x) - 6 * x;
+		fddx = exp(x) - 6;
+		result = abs((fx * fddx) / pow(fdx, 2));
+	}
+	else
+	{
+		cout << " " << endl;
+	}
+	//------------------------------------------------------------
+	if (result < 1)
+	{
+		cout << "True Equation :) " << endl;
+		Processes(x, fx, fdx , choose);
+	}
+	else
+	{
+		system("cls");
+		cout << "False Equation !!" << endl;
+		choose = NULL;
+		x = NULL;
+		main();
+	}
+
+}
+void Processes(double x, double fx, double fdx , int choose)
+{
+	double xic;
+	for (int i = 0; i < 3; i++)
+	{
+		xic = x - (fx / fdx);
+		cout << "                                          " << endl;
+		cout << "Xi = " << x << "   " << "F(Xi) = " << fx   << "   " << "  F'(Xi) = " << fdx   << "  " << "  Xi+1 = " << xic << endl;
+		x = xic;
+		if (choose == 1)
+		{
+			fx = xic - 2 * sin(xic);
+			fdx = 1 - 2 * cos(xic);
+		}
+		else if (choose == 2)
+		{
+			fx = pow(xic, 2) + 10 * cos(xic);
+			fdx = 2 * xic - 10 * sin(xic);
+		}
+		else if (choose == 3)
+		{
+			fx = exp(xic) - 3 * pow(xic, 2);
+			fdx = exp(xic) - 6 * xic;
+		}
+		
+	}
+}
